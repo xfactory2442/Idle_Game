@@ -149,6 +149,9 @@
     </None>
     <None Include="stylesheet.css" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="automation.js" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

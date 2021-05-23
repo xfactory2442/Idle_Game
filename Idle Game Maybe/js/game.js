@@ -9,8 +9,10 @@ var marketing_price = 20;
 
 function OnLoad() {
     //Initialise hidden elements.
-    document.getElementById("make_chocolate").style.visibility = "hidden";
-    document.getElementById("market_chocolate").style.visibility = "hidden";
+    document.getElementById("make_chocolate").className.replace(" active", "");
+    document.getElementById("make_chocolate").style.display = "none";
+    document.getElementById("market_chocolate").className.replace(" active", "");
+    document.getElementById("market_chocolate").style.display = "none";
 
     //Make the site start on the upgrades tab.
     document.getElementById("upgrades_button").click();
@@ -54,7 +56,7 @@ function IncreaseMoneyFromClick() {
 function MakeChocolate() {
     for (i = this.chocolate_bars_made; i > 0; i--) {
         var money_decrease = this.money_decrease_for_chocolate_making * i;
-        if (CheckIfBuyable(-money_decrease) && AddMoney(-money_decrease)) {
+        if (AddMoney(-money_decrease)) {
             AddChocolateBars(i);
             CheckUnlockConditions();
             return;
@@ -65,7 +67,7 @@ function MakeChocolate() {
 function Market() {
     /*Check that the marketing is viable and that the player will be left with either
      some money or some chocolate bars on completion*/
-    if (AddMoney(-marketing_price)) {
+    if (CheckIfBuyable(marketing_price) && AddMoney(-marketing_price)) {
         AddMoneyIncreaseFromChocolateSelling(this.money_increase_from_chocolate_selling);
         this.marketing_price *= 3;
         document.getElementById("market_chocolate").textContent =
@@ -76,16 +78,16 @@ function Market() {
 }
 
 /*Check if an upgrade or something else is buyable by checking if there will be any 
- money or chocolate bars left afterwards to continue the game*/
+ money or chocolate bars left afterwards to continue the game.*/
 function CheckIfBuyable(cost) {
-    if ((this.money > cost || this.chocolate_bars > 0)) {
+    if ((this.money - cost > this.money_decrease_for_chocolate_making || this.chocolate_bars > 0)) {
         return true;
     }
     return false;
 }
 
 function AddMoney(num) {
-    if (this.money + num >= 0 && CheckIfBuyable(num)) {
+    if (this.money + num >= 0) {
         this.money += num;
         document.getElementById("show_money").innerHTML = '$' + this.money;
         return true;
@@ -94,7 +96,7 @@ function AddMoney(num) {
 }
 
 function AddChocolateBars(num) {
-    if (this.chocolate_bars + num >= 0 && CheckIfBuyable(0)) {
+    if (this.chocolate_bars + num >= 0) {
         this.chocolate_bars += num;
         document.getElementById("show_chocolate_bars").innerHTML =
             'Chocolate Bars: ' + this.chocolate_bars;
@@ -125,9 +127,17 @@ function AddMoneyIncreaseFromChocolateSelling(num) {
 }
 
 function EditUI(unlock) {
-    if (unlock.type == "visibility") {
-        document.getElementById(unlock.name).style.visibility =
-            unlock.action ? "visible" : "hidden";
+    var object = document.getElementById(unlock.name);
+    if (unlock.type == "appear") {
+        object.className += " active";
+        object.className += " fadeIn";
+        object.style.display = "inline-block";
+        
+    }
+    else if (unlock.type == "dissapear") {
+        object.className.replace(" active", "");
+        object.className.replace(" fadeIn", "");
+        object.style.display = "none";
     }
 }
 
@@ -141,7 +151,7 @@ function CreateUnlocks() {
             return false;
         }
     }, {
-        type: "visibility",
+        type: "appear",
         name: "make_chocolate",
         action: true
     });
@@ -155,7 +165,7 @@ function CreateUnlocks() {
             return false;
         }
     }, {
-        type: "visibility",
+        type: "appear",
         name: "market_chocolate",
         action: true
     });
