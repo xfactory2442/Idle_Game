@@ -39,10 +39,8 @@
     <None Include="js\options_menu.js">
       <Filter>Source Files\js</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="automation.js">
+    <None Include="js\automation.js">
       <Filter>Source Files\js</Filter>
-    </ClCompile>
+    </None>
   </ItemGroup>
 </Project>

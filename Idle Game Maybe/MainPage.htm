@@ -15,28 +15,41 @@
     <h1>A Game</h1>
     <p id="show_money"></p>
     <p id="show_chocolate_bars"></p>
+    <p id="debug_num_times"></p>
     <div>
-        <button id="increase_money" class="button green_button" onclick="IncreaseMoneyFromClick()"></button>
-        <button id="make_chocolate" class="button blue_button" onclick="MakeChocolate()">Make Chocolate Bar</button>
+        <button id="increase_money" class="button green_button" onclick="SellChocolate(chocolate_bars_sold)"></button>
+        <button id="make_chocolate" class="button blue_button" onclick="MakeChocolate(chocolate_bars_made)">Make Chocolate Bar</button>
         <button id="market_chocolate" class="button white_button" onclick="Market()"></button>
     </div>
     <div id="tab_buttons" class="tab">
         <button id="upgrades_button" class="tablinks tab_button" onclick="ChangeTab(event, 'upgrades_tab')">
             Upgrades
         </button>
+        <button id="employees_button" class="tablinks tab_button" onclick="ChangeTab(event, 'employees_tab')">
+            Employees
+        </button>
         <button id="options_button" class="tablinks tab_button" onclick="ChangeTab(event, 'options_tab')">
             Options
         </button>
     </div>
     <div id="upgrades_tab" class="tabcontent"></div>
+    <div id="employees_tab" class="tabcontent">
+        <h2><u>Employees</u></h2>
+        <button id="hire_employee" class="button white_button" onclick="HireEmployee()">Hire Employee</button>
+        <span id="employee_hire_info"></span>
+        <p id="employee_number"></p>
+        <div id="free_employees">
+        </div>
+        
+    </div>
     <div id="options_tab" class="tabcontent">
-        <h2>Options</h2>
+        <h2><u>Options</u></h2>
         <div class="slidecontainer">
             <h3>Select Button To Change</h3>
             <button class="button white_button" onclick="SelectObject('green_button')">Green Buttons</button>
             <button class="button white_button" onclick="SelectObject('blue_button')">Blue Buttons</button>
             <button class="button white_button" onclick="SelectObject('white_button')">White Buttons</button>
-            
+
             <div>
                 <button class="button grey_button" onclick="CheckClassname('backgroundColor')">
                     Background
@@ -49,9 +62,9 @@
             <input type="range" min="0" max="255" class="slider" id="red"
                    oninput="ChangeColour()" />
             <input type="range" min="0" max="255" class="slider" id="green"
-                   oninput="ChangeColour()"/>
+                   oninput="ChangeColour()" />
             <input type="range" min="0" max="255" class="slider" id="blue"
-                   oninput="ChangeColour()"/>
+                   oninput="ChangeColour()" />
         </div>
     </div>
 </BODY>

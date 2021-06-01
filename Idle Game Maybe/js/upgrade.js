@@ -8,7 +8,7 @@ function AddUpgrade(upgrade) {
     let new_text = document.createElement('text');
     new_text.textContent = upgrade.description;
     new_button.onclick = function () {
-        if (CheckIfBuyable(upgrade.cost) && AddMoney(-upgrade.cost)) {
+        if (CheckIfBuyable(-upgrade.cost, 0)) {
             InterpretUpgrade(upgrade.type, upgrade.amount);
             document.getElementById(upgrade.uniqueid).remove();
         }
@@ -33,35 +33,39 @@ function SetUpUpgrades() {
     upgrade_id = document.getElementById('upgrades_tab');
 
     //Add all upgrades to unlocks.
-    AddUnlockToArray({
-        type: "Upgrade",
-        func: function () {
+    AddUnlockToArray(
+        function () {
             if (money >= 10) {
                 return true;
             }
             return false;
+        },
+        function () {
+            AddUpgrade({
+                uniqueid: "sell1",
+                description: "Multiply Amount of Chocolate Bars Sold per Click by 2",
+                type: "MultiplySell",
+                amount: 2,
+                cost: 10
+            })
         }
-    }, {
-        uniqueid: "sell1",
-        description: "Multiply Amount of Chocolate Bars Sold per Click by 2",
-        type: "MultiplySell",
-        amount: 2,
-        cost: 10
-    });
+    );
 
-    AddUnlockToArray({
-        type: "Upgrade",
-        func: function () {
+    AddUnlockToArray(
+        function () {
             if (money >= 30) {
                 return true;
             }
             return false;
+        },
+        function () {
+            AddUpgrade({
+                uniqueid: "make",
+                description: "Multiply Amount of Chocolate Bars Made per Click by 2",
+                type: "MultiplyCreate",
+                amount: 2,
+                cost: 30
+            })
         }
-    }, {
-        uniqueid: "make",
-        description: "Multiply Amount of Chocolate Bars Made per Click by 2",
-        type: "MultiplyCreate",
-        amount: 2,
-        cost: 30
-    });
+    );
 }
