@@ -1,4 +1,4 @@
-var money = 100;//0;
+var money = 0;
 var money_increase_from_chocolate_selling = 1;
 var sell_chocolate_button_string = 'Sell Chocolate Bar for $';
 var money_decrease_for_chocolate_making = -0.5;
